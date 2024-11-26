@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Articles</h1>
+    
+        {% for article in articles %}
+            <div>
+                <h3>Title: {{ article.title }}</h3>
+                <h3>Content: {{ article.content }}</h3>
+                <h3>Author: {{ article.author }}</h3>
+            </div>
+        {% endfor %}
+
+        <a href="/articles/add/">New article</a>
+
+    </div>
+</body>
+</html>

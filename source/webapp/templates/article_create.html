@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Create Article</h1>
+        <form action="/articles/add/" method="post">
+            {% csrf_token %}
+            <label>Title:</label><br/>
+            <input type="text" name="title"/><br/>
+
+            <label>Text:</label><br/>
+            <textarea name="content"></textarea><br/>
+
+            <label>Author:</label><br/>
+            <input type="text" name="author"/><br/>
+            <br/>
+            <input type="submit" value="Send"/>
+        </form>
+    </div>
+</body>
+</html>

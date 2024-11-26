@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Article</h1>
+        <h3>Title: {{ article.title }}</h3>
+        <h3>Content: {{ article.content }}</h3>
+        <h3>Author: {{ article.author }}</h3>
+    </div>
+</body>
+</html>
