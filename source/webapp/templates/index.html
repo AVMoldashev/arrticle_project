@@ -19,13 +19,13 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ article.title }}</h5>
                         <p class="card-text">Автор: {{ article.author }}</p>
-                        <a href="/article/{{ article.id }}/" class="btn btn-primary">Подробнее</a>
+                        <a href="{% url 'article_detail' article.pk %}" class="btn btn-primary">Подробнее</a>
                     </div>
                 </div>
             </div>
         {% endfor %}
     </div>
-        <a href="/create/">New article</a>
+        <a href="{% url 'create_article' %}">New article</a>
 
     </div>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
