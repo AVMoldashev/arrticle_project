@@ -1,5 +1,6 @@
-from django.shortcuts import render
-from django.shortcuts import HttpResponseRedirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
+from django.http import HttpResponseRedirect, HttpResponseNotFound
 from webapp.models import Article
 # Create your views here.
 
@@ -22,10 +23,21 @@ def article_create_view(request):
         context = {
             'article': article
         }
-        return render(request, 'article_view.html', context)
+        return redirect('article_detail', pk=article.id)
+        #url = reverse('article_detail', kwargs={'pk':article.id})
+        #return HttpResponseRedirect(url)
 
-def article_view(request):
-    article_id = request.GET.get('id')
-    article = Article.objects.get(id=article_id)
-    return render(request, 'article_view.html', context={'article': article})
+
+
+def article_view(request, *args, pk, **kwargs):
+    #print(args, kwargs)
+    #article_id = request.GET.get('id')
+    #try:
+    #    article = Article.objects.get(id=pk)
+    #except Article.DoesNotExist:
+    #    return HttpResponseNotFound('Article not Found')
+    #    raise Http404
+    article = get_object_or_404(Article, pk=pk)
+    return render(request, 'article_view.html', context={'article':article})
+
 
