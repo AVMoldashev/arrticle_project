@@ -18,6 +18,7 @@
                         <h5 class="card-title">{{ article.title }}</h5>
                         <p class="card-text">Автор: {{ article.author }}</p>
                         <a href="{% url 'article_detail' article.pk %}" class="btn btn-primary">Подробнее</a>
+                        <a href="{% url 'update_article' article.pk %}" class="btn btn-primary mx-3">Редактировать</a>
                     </div>
                 </div>
             </div>
