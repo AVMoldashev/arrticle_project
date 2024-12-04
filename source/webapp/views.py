@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpResponseNotFound
+
+from webapp.forms import ArticleForm
 from webapp.models import Article
 from webapp.validate import article_validator
 # Create your views here.
@@ -15,18 +17,22 @@ def index_view(request):
 
 def article_create_view(request):
     if request.method == 'GET':
-        return render(request, 'article_create.html')
-    elif request.method == 'POST':
-        title = request.POST.get('title')
-        content = request.POST.get('content')
-        author = request.POST.get('author')
-        article = Article(title=title, content=content, author=author)
-        errors = article_validator(article)
-        if errors:
-            return render(request, 'article_create.html', context={"errors":errors, 'article': article})
+        form = ArticleForm()
+        return render(request, 'article_create.html', {"form":form})
 
-        article.save()
-        return redirect('article_detail', pk=article.id)
+    elif request.method == 'POST':
+        form = ArticleForm(data=request.POST)
+        if form.is_valid():
+            article = Article.objects.create(title=form.cleaned_data['title'],
+                                             content=form.cleaned_data['content'],
+                                             author=form.cleaned_data['author'])
+
+            return redirect('article_detail', pk=article.id)
+        else:
+            return render(request, 'article_create.html', context={"form":form})
+
+
+
         #url = reverse('article_detail', kwargs={'pk':article.id})
         #return HttpResponseRedirect(url)
 
@@ -47,14 +53,17 @@ def article_view(request, *args, pk, **kwargs):
 def article_update_view(request, *args, pk, **kwargs):
     article = get_object_or_404(Article, pk=pk)
     if request.method == 'GET':
-        return render(request, 'article_update.html', context={'article':article})
-    elif request.method == 'POST':
-        article.title = request.POST.get('title')
-        article.content = request.POST.get('content')
-        article.author = request.POST.get('author')
-        errors = article_validator(article)
-        if errors:
-            return render(request, 'article_update.html', context={"errors":errors, 'article': article})
+        form = ArticleForm(initial={'title': article.title,'content': article.content,'author': article.author})
+        return render(request, 'article_update.html', context={'form':form})
 
-        article.save()
-        return redirect('article_detail', pk=article.id)
+    elif request.method == 'POST':
+        form = ArticleForm(data=request.POST)
+        if form.is_valid():
+            article.title = form.cleaned_data['title'],
+            article.content = form.cleaned_data['content'],
+            article.author = form.cleaned_data['author']
+            article.save()
+            return redirect('article_detail', pk=article.id)
+
+        else:
+            return render(request, 'article_update.html', context={'form': form})

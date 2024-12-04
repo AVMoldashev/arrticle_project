@@ -1,27 +1,10 @@
 {% csrf_token %}
-<label>Title:</label><br/>
-{% if errors.title %}
-    <input class="border border-danger border-3" type="text" name="title" value="{{ article.title }}"/><br/>
-    <p class="text-danger">{{ errors.title }}</p>
-{% else %}
-    <input type="text" name="title" value="{{ article.title }}"/><br/>
-{% endif %}
-
-<label>Text:</label><br/>
-{% if errors.content %}
-    <textarea class="border border-danger border-3" name="content" value="{{ article.content }}"></textarea><br/>
-    <p class="text-danger">{{ errors.content }}</p>
-{% else %}
-    <textarea name="content" value="{{ article.content }}"></textarea><br/>
-{% endif %}
-
-
-<label>Author:</label><br/>
-{% if errors.author %}
-    <input class="border border-danger border-3" type="text" name="author" value="{{ article.author }}"/><br/>
-    <p class="text-danger">{{ errors.author }}</p>
-{% else %}
-    <input type="text" name="author" value="{{ article.author }}"/><br/>
-{% endif %}
+{% for field in form %}
+    <p><label for="{{ field.id_for_label }}">{{ field.label }}</label></p>
+    {% for error in field.errors %}
+        <p class="text-danger">{{ error }}</p>
+    {% endfor %}
+    <p>{{ field }}</p>
+{% endfor %}
 
 <input type="submit" value="{{ button_text }}"/>
