@@ -1,0 +1,10 @@
+{% csrf_token %}
+
+<label>Title:</label><br/>
+<input type="text" name="title"/><br/>
+<label>Text:</label><br/>
+<textarea name="content"></textarea><br/>
+<label>Author:</label><br/>
+<input type="text" name="author"/><br/>
+<br/>
+<input type="submit" value="{{ button_text }}"/>
