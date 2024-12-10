@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+<h1>Удаление</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" style="width: 100px" class="btn btn-danger">Delete</button>
+        <a href="{% url 'articles'%}" style="width: 100px" class="btn btn-warning mx-2">Cancel</a>
+    </form>
+    
+
+</div>
+    
+{% endblock %}

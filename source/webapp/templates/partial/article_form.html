@@ -1,0 +1,22 @@
+    {% csrf_token %}
+
+    <p><label for="{{ form.title.id_for_label }}">{{ form.title.label }}</label></p>
+    {% for error in form.title.errors %}
+       <p class="text-danger">{{ error }}</p>
+    {% endfor %}
+    <p>{{ form.title }}</p>
+    
+    <p><label for="{{ form.content.id_for_label }}">{{ form.content.label }}</label></p>
+    {% for error in form.content.errors %}
+       <p class="text-danger">{{ error }}</p>
+    {% endfor %}
+    <p>{{ form.content }}</p>
+    
+    <p><label for="{{ form.author.id_for_label }}">{{ form.author.label }}</label></p>
+    {% for error in form.author.errors %}
+       <p class="text-danger">{{ error }}</p>
+    {% endfor %}
+    <p>{{ form.author }}</p>
+
+
+    <input class="btn btn-success" type="submit" value="{{ button }}"/>
