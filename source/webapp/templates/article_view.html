@@ -7,12 +7,43 @@
 {% endblock %}
 {% block content %}
     
-    <div class="container">
-        <h1>Article</h1>
-        <h3>Title: {{ article.title }}</h3>
-        <h3>Content: {{ article.content }}</h3>
-        <h3>Author: {{ article.author }}</h3>
-        <p><a href="/">На главную</a></p>
+<div class="container">
+        <h1 class="my-5">Article</h1>
+        <div class="card my-5">
+            <h3 class="card-header">{{ article.title }}</h3>
+            <div class="card-body">
+                <h5 class="card-title">Author: {{ article.author }}</h5>
+                <p class="card-text">{{ article.content }}</p>
+                    {% if article.tags.exists %}
+                        <p class="card-text">
+                            Tags:
+                            {% for tag in article.tags.all %}
+                                {{ tag.name}}
+                                {% if forloop.last %}.
+                                {% else %},
+                                {% endif %}
+                            {% endfor %}
+                        </p>
+                    {% endif %}
+                <a href="/" class="btn btn-primary">На главную</a>
+            </div>
+        </div>
+        <h3 class="#">Comments:</h3>
+        {% for comment in article.comments.all %}
+            <div class="row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Author: {{ comment.author }}</h5>
+                            <p class="card-text">{{ comment.text }}</p>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="card-text">Comment section is empty.</p>
+        {% endfor %}
     </div>
 
 {% endblock %}
