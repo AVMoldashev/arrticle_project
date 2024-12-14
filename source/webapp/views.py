@@ -71,9 +71,9 @@ class ArticleUpdateView(View):
 
 
 class ArticleDeleteView(View):
-    def dispatch(self, request, *args, pk, **kwargs):
+    def dispatch(self, request, *args, **kwargs):
         self.article = get_object_or_404(Article, pk=kwargs.get('pk'))
-        return super().dispatch(request, *args, pk, **kwargs)
+        return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         return render(request, 'delete_article.html', context={"article": self.article})
