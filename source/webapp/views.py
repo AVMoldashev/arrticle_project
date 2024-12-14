@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpResponseNotFound
 from webapp.forms import ArticleForm
 from webapp.models import Article
-from webapp.validate import article_validator
+from django.views.generic import View, TemplateView
 # Create your views here.
 
 
