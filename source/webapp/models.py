@@ -17,3 +17,5 @@ class Article(models.Model):
         db_table = 'articles'
         verbose_name = 'Статья'
         verbose_name_plural = 'Статьи'
+
+
