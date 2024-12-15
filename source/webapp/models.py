@@ -61,7 +61,7 @@ class Tag(BaseModel):
         verbose_name_plural = 'Теги'
 
 
-class ArticleTag(models.Model):
+class ArticleTag(BaseModel):
     article = models.ForeignKey('webapp.Article', related_name='article_tags', on_delete=models.CASCADE, verbose_name='Статья')
     tag = models.ForeignKey('webapp.Tag', related_name='tag_articles', on_delete=models.CASCADE, verbose_name='Тег')
 
