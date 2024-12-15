@@ -14,12 +14,12 @@ class Article(BaseModel):
     title = models.CharField(max_length=50, null=False, blank=False, verbose_name="Заголовок")
     author = models.CharField(max_length=50, null=False, blank=False, verbose_name="Автор")
     content = models.TextField(null=False, blank=False, verbose_name="Контент")
-    #tags = models.ManyToManyField('webapp.Tag', related_name='articles', blank=True)
-    tags = models.ManyToManyField('webapp.Tag',
-                                  related_name='articles',
-                                  through='webapp.ArticleTag',
-                                  through_fields=('article', 'tag'),
-                                  blank=True)
+    tags = models.ManyToManyField('webapp.Tag', related_name='articles', blank=True)
+    #tags_old = models.ManyToManyField('webapp.Tag',
+    #                              related_name='articles_old',
+    #                              through='webapp.ArticleTag',
+    #                              through_fields=('article', 'tag'),
+    #                              blank=True)
 
 
 
@@ -61,11 +61,11 @@ class Tag(BaseModel):
         verbose_name_plural = 'Теги'
 
 
-class ArticleTag(BaseModel):
-    article = models.ForeignKey('webapp.Article', related_name='article_tags', on_delete=models.CASCADE, verbose_name='Статья')
-    tag = models.ForeignKey('webapp.Tag', related_name='tag_articles', on_delete=models.CASCADE, verbose_name='Тег')
-
-
-    def __str__(self):
-        return f"{self.article} | {self.tag}"
+#class ArticleTag(BaseModel):
+#    article = models.ForeignKey('webapp.Article', related_name='article_tags', on_delete=models.CASCADE, verbose_name='Статья')
+#    tag = models.ForeignKey('webapp.Tag', related_name='tag_articles', on_delete=models.CASCADE, verbose_name='Тег')
+#
+#
+#    def __str__(self):
+#        return f"{self.article} | {self.tag}"
 
