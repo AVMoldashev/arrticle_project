@@ -48,7 +48,7 @@ class Comment(BaseModel):
 
 
 class Tag(BaseModel):
-    name = models.CharField(max_length=31, verbose_name='Тег')
+    name = models.CharField(max_length=31, verbose_name='Тег', unique=True)
 
 
 
