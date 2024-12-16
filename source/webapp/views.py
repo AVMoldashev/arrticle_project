@@ -30,13 +30,14 @@ class ArticleCreateView(FormView):
 
 
     def form_valid(self, form):
-        self.article = Article.objects.create(title=form.cleaned_data['title'],
-                                         content=form.cleaned_data['content'],
-                                         author=form.cleaned_data['author']
-                                         )
-        tags = form.cleaned_data['tags']
-        self.article.tags.set(tags)
-        return super().form_valid(form) #redirect("article_detail", pk=article.pk)
+        article = form.save()
+        #article = Article.objects.create(title=form.cleaned_data['title'],
+        #                                 content=form.cleaned_data['content'],
+        #                                 author=form.cleaned_data['author']
+        #                                 )
+        #tags = form.cleaned_data['tags']
+        #article.tags.set(tags)
+        return redirect("article_detail", pk=article.pk) # super().form_valid(form)
 
 
     #def post(self, request, *args, **kwargs):
@@ -79,21 +80,28 @@ class ArticleUpdateView(FormView):
         context['article'] = self.article
         return context
 
-    def get_initial(self):
-        return {'title': self.article.title,
-                'content': self.article.content,
-                'author': self.article.author,
-                'tags': self.article.tags.all()
-                }
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['instance'] = self.get_object()
+        return kwargs
+
+    #def get_initial(self):
+    #    return {'title': self.article.title,
+    #            'content': self.article.content,
+    #            'author': self.article.author,
+    #            'tags': self.article.tags.all()
+    #            }
 
     def form_valid(self, form):
-        self.article.title = form.cleaned_data['title']
-        self.article.content = form.cleaned_data['content']
-        self.article.author = form.cleaned_data['author']
-        self.article.save()
-        tags = form.cleaned_data['tags']
-        self.article.tags.set(tags)
+        self.article = form.save()
         return redirect('article_detail', pk=self.article.id)
+        #self.article.title = form.cleaned_data['title']
+        #self.article.content = form.cleaned_data['content']
+        #self.article.author = form.cleaned_data['author']
+        #self.article.save()
+        #tags = form.cleaned_data['tags']
+        #self.article.tags.set(tags)
+        #return redirect('article_detail', pk=self.article.id)
 
     #def get(self, request, *args, **kwargs):
     #    form = ArticleForm(initial={'title': self.article.title,
