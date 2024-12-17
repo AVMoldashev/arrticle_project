@@ -3,16 +3,26 @@ from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseRedirect, HttpResponseNotFound
 from webapp.forms import ArticleForm
 from webapp.models import Article
-from django.views.generic import View, TemplateView, FormView
+from django.views.generic import View, TemplateView, FormView, ListView
 # Create your views here.
 
 
-class ArticleListView(View):
-    def get(self, request, *args, **kwargs):
-        context = {
-            'articles': Article.objects.all()
-        }
-        return render(request, 'articles/index.html', context=context)
+class ArticleListView(ListView):  #View
+    #queryset = Article.objects.all()  #filter(title__icontains="article")
+    #model = Article
+    template_name = 'articles/index.html'
+    context_object_name = "articles"
+    ordering = ["-created_at"]
+
+    def get_queryset(self):
+        return Article.objects.filter(title__icontains="article").order_by("-created_at")
+
+
+    #def get(self, request, *args, **kwargs):
+    #    context = {
+    #        'articles': Article.objects.all()
+    #    }
+    #    return render(request, 'articles/index.html', context=context)
 
 
 class ArticleCreateView(FormView):
