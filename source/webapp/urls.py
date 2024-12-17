@@ -1,5 +1,5 @@
 from django.urls import path
-from webapp.views import ArticleListView,ArticleCreateView,ArticleView, ArticleUpdateView,ArticleDeleteView
+from webapp.views.articles import ArticleListView,ArticleCreateView,ArticleView, ArticleUpdateView,ArticleDeleteView
 
 urlpatterns = [
     path('', ArticleListView.as_view(), name="articles"),
