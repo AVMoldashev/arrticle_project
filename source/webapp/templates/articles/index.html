@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% block title %}Статьи{% endblock %}
 {% block menu %}
     <li class="nav-item">
         <a class="nav-link" aria-current="page" href="{% url 'create_article' %}">New article</a>
@@ -8,8 +8,15 @@
 
 {% block content %}
 
-    <div class="container">
+    <div class="container my-5">
         <h1>Articles</h1>
+
+        {% if is_paginated %}
+            <div class="my-5">
+            {% include "partial/pagination.html" %}
+            </div>
+        {% endif %}
+
         <div class="row row-cols-1 row-cols-md-3 g-4" style="margin-bottom: 50px">
         {% for article in articles %}
             <div class="col">

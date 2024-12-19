@@ -9,13 +9,18 @@ from django.views.generic import View, TemplateView, FormView, ListView
 
 class ArticleListView(ListView):  #View
     #queryset = Article.objects.all()  #filter(title__icontains="article")
-    #model = Article
+    model = Article
     template_name = 'articles/index.html'
     context_object_name = "articles"
     ordering = ["-created_at"]
+    paginate_by = 3
 
-    def get_queryset(self):
-        return Article.objects.filter(title__icontains="article").order_by("-created_at")
+    def get_context_data(self, **kwargs):
+        context = super(ArticleListView, self).get_context_data(**kwargs)
+        return context
+
+    #def get_queryset(self):
+    #    return Article.objects.filter(title__icontains="article").order_by("-created_at")
 
 
     #def get(self, request, *args, **kwargs):
