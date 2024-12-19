@@ -18,7 +18,6 @@ class ArticleForm(forms.ModelForm):
             'tags': widgets.CheckboxSelectMultiple()
         }
 
-
 #class ArticleForm(forms.Form):
 #    title = forms.CharField(max_length=50, required=True, #validators=(at_least_5,),
 #                            validators=(MinLengthValidator(5),),

@@ -8,14 +8,17 @@
 
 {% block content %}
 
-    <div class="container my-5">
-        <h1>Articles</h1>
+    <h1>Articles</h1>
+        <div class="my-5">
+            {% include 'partial/search.html' with form=search_form%}
+        </div>
 
-        {% if is_paginated %}
             <div class="my-5">
             {% include "partial/pagination.html" %}
             </div>
-        {% endif %}
+
+    <div class="container my-5">
+
 
         <div class="row row-cols-1 row-cols-md-3 g-4" style="margin-bottom: 50px">
         {% for article in articles %}
