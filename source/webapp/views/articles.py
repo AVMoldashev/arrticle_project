@@ -5,7 +5,7 @@ from django.utils.http import urlencode
 
 from webapp.forms import ArticleForm, SimpleSearchForm
 from webapp.models import Article
-from django.views.generic import View, TemplateView, FormView, ListView
+from django.views.generic import View, TemplateView, FormView, ListView, DetailView
 from django.db.models import Q
 
 
@@ -83,13 +83,21 @@ class ArticleCreateView(FormView):
     #        return render(request, 'article_create.html', context={"form": form})
 
 
-class ArticleView(TemplateView):
+class ArticleView(DetailView):
     template_name = 'articles/article_view.html'
+    model = Article
+    context_object_name = "article"
 
-    def get_context_data(self, **kwargs):
+
+    def get_context_object_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["article"] = get_object_or_404(Article, pk=self.kwargs['pk'])
+        context["comments"] = self.object.comments.order_by("created_at")#self.get_object()
         return context
+
+    #def get_context_data(self, **kwargs):
+    #    context = super().get_context_data(**kwargs)
+    #    context["article"] = get_object_or_404(Article, pk=self.kwargs['pk'])
+    #    return context
 
 
 class ArticleUpdateView(FormView):
