@@ -54,12 +54,12 @@ class ArticleCreateView(CreateView):
     form_class = ArticleForm
 
     def get_success_url(self):
-        return reverse('article_detail', kwargs={"pk": self.object.pk})
+        return reverse('webapp:article_detail', kwargs={"pk": self.object.pk})
 
     def form_valid(self, form):
         article = form.save()
 
-        return redirect("article_detail", pk=article.pk)  # super().form_valid(form)
+        return redirect("webapp:article_detail", pk=article.pk)  # super().form_valid(form)
 
 
 class ArticleView(DetailView):
@@ -82,4 +82,4 @@ class ArticleUpdateView(UpdateView):
 class ArticleDeleteView(DeleteView):
     model = Article
     template_name = "articles/delete_article.html"
-    success_url = reverse_lazy("articles")
+    success_url = reverse_lazy("webapp:articles")
