@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.utils.http import urlencode
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from webapp.forms import ArticleForm, SimpleSearchForm
 from webapp.models import Article
 from django.views.generic import View, TemplateView, FormView, ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -49,17 +49,22 @@ class ArticleListView(ListView):  # View
         return context
 
 
-class ArticleCreateView(CreateView):
+class ArticleCreateView(LoginRequiredMixin, CreateView):
     template_name = 'articles/article_create.html'
     form_class = ArticleForm
 
     def get_success_url(self):
         return reverse('webapp:article_detail', kwargs={"pk": self.object.pk})
 
-    def form_valid(self, form):
-        article = form.save()
+    #def dispatch(self, request, *args, **kwargs):
+    #    if request.user.is_authenticated:
+    #        return super().dispatch(request, *args, **kwargs)
+    #    else:
+    #       return redirect("accounts:login")
 
-        return redirect("webapp:article_detail", pk=article.pk)  # super().form_valid(form)
+    #def form_valid(self, form):
+    #    article = form.save()
+    #    return redirect("webapp:article_detail", pk=article.pk)  # super().form_valid(form)
 
 
 class ArticleView(DetailView):
