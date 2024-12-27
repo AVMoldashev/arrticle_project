@@ -1,13 +1,13 @@
 from django.db import models
+from webapp.models import BaseModel
+from django.urls import reverse
 
-# Create your models here.
-
-class Article(models.Model):
+class Article(BaseModel):
     title = models.CharField(max_length=50, null=False, blank=False, verbose_name="Заголовок")
     author = models.CharField(max_length=50, null=False, blank=False, verbose_name="Автор")
     content = models.TextField(null=False, blank=False, verbose_name="Контент")
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Время создания")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="Время изменения")
+    tags = models.ManyToManyField('webapp.Tag', related_name='articles', blank=True)
+
 
 
     def __str__(self):
@@ -17,3 +17,7 @@ class Article(models.Model):
         db_table = 'articles'
         verbose_name = 'Статья'
         verbose_name_plural = 'Статьи'
+
+
+    def get_absolute_url(self):
+        return reverse('article_detail', kwargs={'pk': self.pk})
